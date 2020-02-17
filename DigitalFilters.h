@@ -1,9 +1,17 @@
 #ifndef _DIGITAL_FILTERS_H_
 #define _DIGITAL_FILTERS_H_
 
-#include <stdexcept>
-#include <cmath>
-#include "CircularDelay/CircularDelay.hpp"
+#include "CircularDelay.h"
+
+
+#define _DIGITAL_FILTERS_DEBUG
+#ifdef _DIGITAL_FILTERS_DEBUG
+#define P_msg(msg) Serial.println(msg)
+#else 
+#define P_msg(msg)
+#endif
+
+#define LPConsErMsg "LowPassFilter constructor error: tua_c is smaller than the sample time dt."
 
 template<typename T>
 constexpr T squareOf(T input){return input * input;}
@@ -75,7 +83,8 @@ public:
 		dt(idt),
 		output(ioutput){
 			if(omega_c < idt){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				////////////////////////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	/**
@@ -137,7 +146,8 @@ public:
 		}
 		{
 			if(tau_c < M_PI * dt){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				///////////////////////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	/**
@@ -204,7 +214,8 @@ public:
 		y1c((idt * omega_c / 2) - 1),
 		dt(idt){
 			if(omega_c < idt){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				///////////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	/**
@@ -268,7 +279,8 @@ public:
 		}
 		{
 			if(omega_c < sampleTime){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				///////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	double update(double newValue) final{
@@ -340,7 +352,8 @@ public:
 		}
 		{
 			if(omega_c < sampleTime){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				////////////////////////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	double update(double newValue) final{
@@ -383,7 +396,8 @@ public:
 		}
 		{
 			if(omega_c / (2 * M_PI) < sampleTime){
-				throw std::domain_error("LowPassFilter3MatchedZ constructor error: tua_c is smaller than the sample time dt.");
+				/////////////////////////////////////////////////////////throw std::domain_error("LowPassFilter3MatchedZ constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	double update(double newValue) final{
@@ -426,7 +440,8 @@ public:
 		}
 		{
 			if(omega_c < sampleTime){
-				throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				////////////////////////////////////////////////////////////////throw std::domain_error("LowPassFilter constructor error: tua_c is smaller than the sample time dt.");
+				P_msg(LPConsErMsg);
 			}
 		}
 	double update(double newValue) final{
